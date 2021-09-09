@@ -19,21 +19,21 @@ object Q4
 		var acc6=new account("S128",1006,12000)
 		val bank:List[account]=List(acc1,acc2,acc3,acc4,acc5,acc6)
 
-		print("Overdraft account numbers   : ");
-		var ODlist=overdraft(bank);
-		ODlist.foreach(x=>print(x.accNumber+"   "));
+		print("Overdraft account numbers   : ")
+		var ODlist=overdraft(bank)
+		ODlist.foreach(x=>print(x.accNumber+"   "))
 
-		var tBalance=balance(bank);
-		print("\nTotal account balance       : Rs."+tBalance.accBalance);
+		var tBalance=balance(bank)
+		print("\nTotal account balance       : Rs."+tBalance.accBalance)
 
-		println("\nAccount balances + interest")
-		var interestList=interest(bank);
-		interestList.foreach(x=>println("Rs."+x));
-
-		println("\n-------------------------------------");
+		println("\nAccount balances after interest")
+		var interestList=interest(bank)
+		interestList.foreach(x=>println("Rs. "+x))
+		
+		println("\n-------------------------------------")
 	}
 
-	val overdraft=(list:List[account])=>list.filter(x=>x.accBalance<=0);
-	val balance=(list:List[account])=>list.reduce((x,y)=>new account("S000",1000,x.accBalance+y.accBalance));
-	val interest=(list:List[account])=>list.map(x=>(if(x.accBalance>0) x.accBalance*1.05d else x.accBalance*1.1d));
+	val overdraft=(list:List[account])=>list.filter(x=>x.accBalance<=0)
+	val balance=(list:List[account])=>list.reduce((x,y)=>new account("S000",1000,x.accBalance+y.accBalance))
+	val interest=(list:List[account])=>list.map(x=>(if(x.accBalance>0) x.accBalance*1.05d else x.accBalance*1.1d))
 }
