@@ -10,8 +10,8 @@ class account(idNumber:String,accountNumber:Int,accountBalance:Double){
 		val transferAcc = this.withdraw(amount)
 		val transferedAcc = Acc.deposit(amount)
       
-      		println("Transfer=>  "+transferAcc)
-		println("Transfered=>  "+transferedAcc)
+      		println("The account which transfer the money=>  "+transferAcc)
+		println("The account which get the money=>  "+transferedAcc)
 	  }
     	  else{
 		println("Your account balnce is not sufficient.")
