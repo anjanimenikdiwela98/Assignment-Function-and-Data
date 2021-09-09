@@ -16,7 +16,7 @@ object Q4
 		var acc3=new account("S125",1003,50000)
 		var acc4=new account("S126",1004,-1000)
 		var acc5=new account("S127",1005,-10000)
-		var acc6=new account("S128",1006,0)
+		var acc6=new account("S128",1006,12000)
 		val bank:List[account]=List(acc1,acc2,acc3,acc4,acc5,acc6)
 
 		print("Overdraft account numbers   : ");
