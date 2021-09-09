@@ -1,61 +1,39 @@
-object Q4 extends App {
-
-    var accountList:List[Account] = List()
-
-    def accCreate(nic:String, accId: Int):Unit = {
-        val acc = new Account(nic, accId)
-        accountList = accountList ::: acc :: Nil
-        println(accountList)
-    }
-
-    val find = (a:Int, b:List[Account]) => b.filter(account => account.accId.equals(a))
-    val overdraft = (b:List[Account]) => b.filter(account => account.balance < 0.0)
-    val totalBalance = (b:List[Account]) => b.foldLeft(0.0)((x, y) => x + y.balance)
-    val interest = (b:List[Account]) => b.map(account => if(account.balance > 0) account.balance*0.05 else account.balance*0.1)
-
-
-    /*              Driver Code                */
-    
-    //create accounts
-    accCreate("1",1)
-    accCreate("2",2)
-
-    //deposit money
-    find(1, accountList)(0).deposit(1000)
-    println(find(1, accountList)(0))
-
-    //transfer money
-    find(1, accountList)(0).transfer(2, 100.0)
-    println(find(2, accountList)(0))
-
-    //list of negative balances
-    println(overdraft(accountList))
-
-    //sum of all account balances
-    println(totalBalance(accountList))
-
-    //final balances of all accounts after apply the interest
-    println(interest(accountList))
+class account(idNumber:String,accountNumber:Int,accountBalance:Double)
+{
+	def nicNumber=idNumber
+	def accNumber=accountNumber
+	def accBalance=accountBalance
 }
 
-class Account(nic:String, val accId: Int, var balance: Double = 0.0){
+object Q4
+{
+	def main(args:Array[String])
+	{
+		println("*******Overdraft----Total Balance----Interest*********")
 
-    def withdrow(amount:Double) : Unit = {
-        this.balance = this.balance - amount
-    }
+		var acc1=new account("S123",1001,25000)
+		var acc2=new account("S124",1002,10000)
+		var acc3=new account("S125",1003,50000)
+		var acc4=new account("S126",1004,-1000)
+		var acc5=new account("S127",1005,-10000)
+		var acc6=new account("S128",1006,0)
+		val bank:List[account]=List(acc1,acc2,acc3,acc4,acc5,acc6)
 
-    def deposit(amount:Double) : Unit = {
-        this.balance = this.balance + amount
-    }
+		print("Overdraft account numbers   : ");
+		var ODlist=overdraft(bank);
+		ODlist.foreach(x=>print(x.accNumber+"   "));
 
-    def transfer(account:Int, amount:Double) : Unit = {
-        val transferAcc = Q4.find(account, Q4.accountList)
-        if (balance < 0.0) println("Insufficient balance")
-        else {
-            this.withdrow(amount)
-            transferAcc(0).deposit(amount)
-        }
-    }
+		var tBalance=balance(bank);
+		print("\nTotal account balance       : Rs."+tBalance.accBalance);
 
-    override def toString = "["+nic+":"+accId +":"+ balance+"]"
+		println("\nAccount balances + interest")
+		var interestList=interest(bank);
+		interestList.foreach(x=>println("Rs."+x));
+
+		println("\n-------------------------------------");
+	}
+
+	val overdraft=(list:List[account])=>list.filter(x=>x.accBalance<=0);
+	val balance=(list:List[account])=>list.reduce((x,y)=>new account("S000",1000,x.accBalance+y.accBalance));
+	val interest=(list:List[account])=>list.map(x=>(if(x.accBalance>0) x.accBalance*1.05d else x.accBalance*1.1d));
 }
